@@ -6,7 +6,7 @@ type Error struct {
 	Code   string      `json:"code,omitempty"`
 	Detail string      `json:"detail,omitempty"`
 	Links  string      `json:"links,omitempty"`
-	Status int         `json:"status,omitempty"`
+	Status string      `json:"status,omitempty"`
 	Field  string      `json:"field,omitempty"`
 	Title  string      `json:"title,omitempty"`
 	Source Source      `json:"source,omitempty"`
@@ -27,17 +27,40 @@ func NewEmptyError() *Error {
 
 //NewFieldError create new standard error,
 //using field and detail value
-func NewFieldError(field, detail string) *Error {
+func NewFieldError(status, field, detail string) *Error {
 	return &Error{
 		Field:  field,
 		Detail: detail,
+		Status: status,
 	}
 }
 
 //NewFromError create new standard error,
 //using standard error from Go Package
-func NewFromError(err error) *Error {
+func NewFromError(status string, err error) *Error {
 	return &Error{
 		Detail: err.Error(),
+		Status: status,
+	}
+}
+
+//NewBasicError create new standard error,
+//http://jsonapi.org/examples/#error-objects-basics
+func NewBasicError(status, pointer, title, detail string) *Error {
+	return &Error{
+		Status: status,
+		Source: Source{Pointer: pointer},
+		Title:  title,
+		Detail: detail,
+	}
+}
+
+//NewInvalidQueryParameter create new standard error,
+//http://jsonapi.org/examples/#error-objects-invalid-query-parameters
+func NewInvalidQueryParameter(parameter, title, detail string) *Error {
+	return &Error{
+		Source: Source{Parameter: parameter},
+		Title:  title,
+		Detail: detail,
 	}
 }

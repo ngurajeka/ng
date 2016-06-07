@@ -31,21 +31,21 @@ func (e *Errors) AppendSlice(errs []*Error) {
 
 //AppendError add new standard error from Go Package
 //to the container
-func (e *Errors) AppendError(err error) {
-	e.Errors = append(e.Errors, NewFromError(err))
+func (e *Errors) AppendError(status string, err error) {
+	e.Errors = append(e.Errors, NewFromError(status, err))
 }
 
 //AppendSliceError add new slice of standard error from
 //Go package to the container
-func (e *Errors) AppendSliceError(errs []error) {
+func (e *Errors) AppendSliceError(status string, errs []error) {
 	for _, err := range errs {
-		e.Errors = append(e.Errors, NewFromError(err))
+		e.Errors = append(e.Errors, NewFromError(status, err))
 	}
 }
 
 //NewFieldError add new error with field, and detail
-func (e *Errors) NewFieldError(field, detail string) {
-	e.Errors = append(e.Errors, NewFieldError(field, detail))
+func (e *Errors) NewFieldError(status, field, detail string) {
+	e.Errors = append(e.Errors, NewFieldError(status, field, detail))
 }
 
 //IsError check if it has more than zero error(s)
