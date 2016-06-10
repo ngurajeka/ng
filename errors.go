@@ -18,14 +18,21 @@ func NewErrors() *Errors {
 }
 
 //Append add new error to the container
-func (e *Errors) Append(err *Error) {
-	e.Errors = append(e.Errors, err)
+func (e *Errors) Append(errs ...*Error) {
+	e.Errors = append(e.Errors, errs...)
 }
 
 //AppendSlice add new slice of error to the container
 func (e *Errors) AppendSlice(errs []*Error) {
 	for _, err := range errs {
 		e.Errors = append(e.Errors, err)
+	}
+}
+
+//AppendErrors add new errors from the same errors structure
+func (e *Errors) AppendErrors(errs *Errors) {
+	if len(errs.Errors) > 0 {
+		e.Errors = append(e.Errors, errs.Errors...)
 	}
 }
 
@@ -58,7 +65,7 @@ func (e *Errors) IsError() bool {
 func (e *Errors) LogPrint() {
 	for _, err := range e.Errors {
 		log.Printf("%s", err.Detail)
-		log.Printf("Errors: %v", err)
+		log.Println()
 	}
 }
 
@@ -67,6 +74,6 @@ func (e *Errors) LogPrint() {
 func (e *Errors) FmtPrint() {
 	for _, err := range e.Errors {
 		fmt.Printf("%s", err.Detail)
-		fmt.Printf("Errors: %v", err)
+		fmt.Println()
 	}
 }
