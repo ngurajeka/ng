@@ -8,7 +8,7 @@ import (
 //Errors is the container of the standard error
 //from jsonapi.org
 type Errors struct {
-	Errors []*Error
+	Errors []*Error `json:"errors"`
 }
 
 //NewErrors create new empty container
@@ -50,9 +50,44 @@ func (e *Errors) AppendSliceError(status string, errs []error) {
 	}
 }
 
+//NewError add new error with status and detail
+func (e *Errors) NewError(status, detail string) {
+	e.Errors = append(e.Errors, NewError(status, detail))
+}
+
 //NewFieldError add new error with field, and detail
 func (e *Errors) NewFieldError(status, field, detail string) {
 	e.Errors = append(e.Errors, NewFieldError(status, field, detail))
+}
+
+//NotFound add new error with 404 not found
+func (e *Errors) NotFound(detail string) {
+	e.Errors = append(e.Errors, NotFound(detail))
+}
+
+//InternalServerError add new error with 500 internal server error
+func (e *Errors) InternalServerError(detail string) {
+	e.Errors = append(e.Errors, InternalServerError(detail))
+}
+
+//BadRequest add new error with 400 bad request
+func (e *Errors) BadRequest(detail string) {
+	e.Errors = append(e.Errors, BadRequest(detail))
+}
+
+//Unauthorized add new error with 401 unauthorized
+func (e *Errors) Unauthorized(detail string) {
+	e.Errors = append(e.Errors, Unauthorized(detail))
+}
+
+//Forbidden add new error with 403 forbidden
+func (e *Errors) Forbidden(detail string) {
+	e.Errors = append(e.Errors, Forbidden(detail))
+}
+
+//Conflict add new error with 401 conflict
+func (e *Errors) Conflict(detail string) {
+	e.Errors = append(e.Errors, Conflict(detail))
 }
 
 //IsError check if it has more than zero error(s)
