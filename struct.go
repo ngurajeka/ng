@@ -6,6 +6,7 @@ import (
 	"strings"
 )
 
+//IsStruct check an interface if its a struct or not
 func IsStruct(i interface{}) (reflect.Value, bool) {
 	v := reflect.ValueOf(i)
 
@@ -20,6 +21,7 @@ func IsStruct(i interface{}) (reflect.Value, bool) {
 	return v, true
 }
 
+//ValidateStruct validating struct based on their field tags.
 func ValidateStruct(i interface{}) *Errors {
 
 	var (
