@@ -7,7 +7,7 @@ func NewResponse(v interface{}) interface{} {
 	var response interface{}
 	switch v.(type) {
 	case Errors:
-		response = errorResponse(v)
+		response = ErrorResponse(v)
 	case Data:
 		response = v
 		// default:
@@ -16,7 +16,7 @@ func NewResponse(v interface{}) interface{} {
 	return response
 }
 
-func errorResponse(v interface{}) MapString {
+func ErrorResponse(v interface{}) MapString {
 	return MapString{
 		"status": MapString{
 			"error": v,
